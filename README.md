@@ -1,7 +1,7 @@
 ## <p align="center" style="margin-top: 0;">Tokoh Alat Motor</p>
 
 <p align="center">
-  <img src="ttps://images.app.goo.gl/XRj3c2DwfH1erm7eA" width="300" alt="Deskripsi gambar" />
+  <img src="LOGO-UNSULBAR.png" width="300" alt="Deskripsi gambar" />
 </p>
 
 ### <p align="center">Karunia Juli Sariri</p>
