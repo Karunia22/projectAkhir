@@ -30,7 +30,6 @@
 | Laporan Penjualan | Melihat riwayat penjualan produk. |
 
 ### 3. Pelanggan
-**Fokus:** Kirim gabah / pantau proses
 | Fitur | Deskripsi |
 | ----------- | ----------- |
 | Registrasi & Login | Mendaftar akun, masuk ke sistem.|
