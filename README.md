@@ -108,6 +108,7 @@
 
 ### 7. Tabel ```{Keranjang}```
 | Field | Tipe Data | Keterangan |
+| ----------- | ----------- | ----------- |
 | id | INTEGER(PK) | Primary key |
 | user_id | INTEGER(FK) | Foreign key ke pengguna |
 | produk_id | INTEGER(FK) | Foreign key ke produk |
@@ -115,6 +116,7 @@
 
 ### 8. Tabel ```{Layanan Servis}```
 | Field | Tipe Data | Keterangan |
+| ----------- | ----------- | ----------- |
 | id | INTEGER(PK) | Primary key |
 | nama | VARCHAR | Nama layanan servis | 
 | deskripsi | TEXT | Detail layanan |
@@ -125,6 +127,7 @@
 
 ### 9. Tabel ```{Permintaaan_servis}```
 | Field | Tipe Data | Keterangan |
+| ----------- | ----------- | ----------- |
 | id |  INTEGER | Primary key |
 | user_id | INTEGER(FK) | Foreign key ke pengguna |
 | layanan_id | INTEGER | Foreign key ke layanan_servis |
@@ -137,6 +140,7 @@
 
 ### 10. Tabel ```{Teknisi}```
 | Field | Tipe Data | Keterangan |
+| ----------- | ----------- | ----------- |
 |id | INTEGER | Primary key |
 | nama  | VARCHAR | Nama teknisi |
 | telepon | VARCHAR | No HP teknisi |
@@ -145,6 +149,7 @@
 
 ### 11. Tabel ```{Penugasan Teknisi}```
 | Field | Tipe Data | Keterangan |
+| ----------- | ----------- | ----------- |
 |id | INTEGER | Primary key |
 | teknisi_id | INTEGER (FK) | Foreign key ke teknisi |
 | permintaan_id | INTEGER (FK) | Foreign key ke permintaan_servis | 
