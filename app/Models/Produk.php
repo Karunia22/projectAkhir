@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Kategori;
+use App\Models\Keranjang;
+use App\Models\DetailPesanan;
 class Produk extends Model
 {
     //
@@ -13,4 +15,11 @@ class Produk extends Model
     public function produkKeKategori(){
         return $this->belongsTo(Kategori::class,'kategori_id','id');
     }
+    public function produkKeKeranjang(){
+        return $this->hasMany(Keranjang::class,'kategori_id','id');
+    }
+    public function produkKeKeDetailPesanan(){
+        return $this->hasMany(DetailPesanan::class,'kategori_id','id');
+    }
+
 }

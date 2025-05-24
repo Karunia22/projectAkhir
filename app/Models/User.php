@@ -6,6 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Pesanan;
+use App\Models\Keranjang;
+use App\Models\Permintaan_Servis;
 
 class User extends Authenticatable
 {
@@ -45,5 +48,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function userKePesanan(){
+        return $this->hasMany(Pesanan::class, 'user_id',  'id');
+    }
+
+    public function userKeKeranjang(){
+        return $this->hasMany(Keranjang::class, 'user_id', 'id');
+    }
+
+    public function userKePermintaan_Servis(){
+        return $this->hasMany(Permintaan_Servis::class, 'user_id', 'id');
     }
 }

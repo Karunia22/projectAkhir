@@ -18,7 +18,6 @@ class UserLogin
         if( auth()->user()->role === $role){
             return $next($request);
         }
-
         return response()->json('tidak bisa diakses');
     }
 }

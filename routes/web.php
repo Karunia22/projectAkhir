@@ -8,7 +8,10 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('admin.tampilanAdmin');
+    return view('beranda');
+})->name('cek');
+Route::get('/s', function () {
+    return view('pembeli.beranda');
 })->name('cek');
 
 // Route::get('/dashboard', function () {
@@ -52,6 +55,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:pembeli'])->group(function () {
     Route::get('/pembeli', [PembeliController::class, 'berandaPembeli'])->name('pembeliBeranda');
+    Route::get('/pembeli/produk', [PembeliController::class, 'produk'])->name('produkPembeli');
+    Route::get('/pembeli/detailProduk', [PembeliController::class, 'detailProduk'])->name('detailProdukPembeli');
+    Route::get('/pembeli/keranjang', [PembeliController::class, 'keranjang'])->name('keranjangPembeli');
 });
 
 Route::middleware(['auth', 'role:penjual'])->group(function () {
