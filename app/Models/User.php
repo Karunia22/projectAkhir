@@ -61,4 +61,9 @@ class User extends Authenticatable
     public function userKePermintaan_Servis(){
         return $this->hasMany(Permintaan_Servis::class, 'user_id', 'id');
     }
+    public function userKePrifils(){
+        return $this->hasOne(Permintaan_Servis::class);
+    }
+
+
 }

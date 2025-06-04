@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('layanan_id')->constrained('layanan_servis')->onDelete('cascade');
             $table->text('alamat');
             $table->date('jadwal');
-            $table->enum('status', ['pending', 'scheduled', 'done', 'canceled']);
+            $table->enum('status', ['pending', 'scheduled', 'done', 'canceled'])->default('pending');
             $table->string('no_telepon');
             $table->timestamps();
         });

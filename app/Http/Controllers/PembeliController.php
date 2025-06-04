@@ -26,4 +26,19 @@ class PembeliController extends Controller
     public function keranjang(){
         return view('pembeli.keranjang');
     }
+
+    public function detailPesanan(){
+        return view('pembeli.detailPesanan');
+    }
+    public function pesanan(){
+        return view('pembeli.pesanan');
+    }
+
+    public function permintaanServis(){
+        return view('pembeli.permintaanServis');
+    }
+
+    public function pembeliProfil(){
+        return view('pembeli.profil');
+    }
 }

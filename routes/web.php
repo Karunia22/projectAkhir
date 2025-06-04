@@ -58,6 +58,10 @@ Route::middleware(['auth', 'role:pembeli'])->group(function () {
     Route::get('/pembeli/produk', [PembeliController::class, 'produk'])->name('produkPembeli');
     Route::get('/pembeli/detailProduk', [PembeliController::class, 'detailProduk'])->name('detailProdukPembeli');
     Route::get('/pembeli/keranjang', [PembeliController::class, 'keranjang'])->name('keranjangPembeli');
+    Route::get('/pembeli/detailPesanan', [PembeliController::class, 'detailPesanan'])->name('detailPesanan');
+    Route::get('/pembeli/pesanan', [PembeliController::class, 'pesanan'])->name('pesanan');
+    Route::get('/pembeli/permintaanServis', [PembeliController::class, 'permintaanServis'])->name('permintaanServis');
+    Route::get('/pembeli/pembeliProfil', [PembeliController::class, 'pembeliProfil'])->name('pembeliProfil');
 });
 
 Route::middleware(['auth', 'role:penjual'])->group(function () {
