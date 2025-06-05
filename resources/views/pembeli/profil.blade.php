@@ -20,9 +20,6 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="blog_left_sidebar">
-                        
-                        
-                        
                         <article class="row blog_item">
                             <div class="col-md-9">
                                 <div class="blog_post">
@@ -57,7 +54,14 @@
                                 ters andits detractors.</p>
                             <div class="br"></div>
                         </aside>
-                        <h3 class="widget_title">Edit Profil</h3>
+                        <ul>
+                            <li><a href="#"
+                                    style="color: white;display:flex; justify-content:center; align-items: center; text-decoration: none; font-size:16px; margin:10px 0px 0px 34%; width: 100px; height: 40px; background-color: orange">Edit
+                                    Profil</a></li>
+                            <li><a href="{{ route('logout') }}"
+                                    style="color: white;display:flex; justify-content:center; align-items: center; text-decoration: none; font-size:16px; margin:10px 0px 0px 34%; width: 100px; height: 40px; background-color: orange">Keluar</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -22,19 +22,12 @@
                                 <li class="nav-item"><a class="nav-link" href="{{ route('produkPembeli') }}">Shop
                                         Category</a></li>
                                 <li class="nav-item"><a class="nav-link"
-                                        href="{{ route('detailProdukPembeli') }}">Product Details</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{{ route('pesanan') }}">Product Checkout</a>
+                                        href="{{-- {{ route('detailProdukPembeli') }} --}}">Product Details</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('pesanan') }}">Product
+                                        Checkout</a>
                                 </li>
-                                <li class="nav-item"><a class="nav-link" href="{{ route('detailPesanan') }}">Confirmation</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-haspopup="true" aria-expanded="false">Blog</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                                <li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a>
+                                <li class="nav-item"><a class="nav-link"
+                                        href="{{ route('detailPesanan') }}">Confirmation</a>
                                 </li>
                             </ul>
                         </li>
@@ -48,9 +41,11 @@
                                 @endif
                             @endauth
                         @endif
-                        
-                        <li class="nav-item"><a class="nav-link" href="{{ route('keranjangPembeli') }}">Keranjang</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('permintaanServis') }}">Permintaan Servis</a></li>
+
+                        <li class="nav-item"><a class="nav-link" href="{{ route('keranjangPembeli') }}">Keranjang</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('permintaanServis') }}">Permintaan
+                                Servis</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">

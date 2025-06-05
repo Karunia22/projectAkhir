@@ -56,7 +56,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:pembeli'])->group(function () {
     Route::get('/pembeli', [PembeliController::class, 'berandaPembeli'])->name('pembeliBeranda');
     Route::get('/pembeli/produk', [PembeliController::class, 'produk'])->name('produkPembeli');
-    Route::get('/pembeli/detailProduk', [PembeliController::class, 'detailProduk'])->name('detailProdukPembeli');
+    Route::get('/pembeli/detailProduk/{id}', [PembeliController::class, 'detailProduk'])->name('detailProdukPembeli');
     Route::get('/pembeli/keranjang', [PembeliController::class, 'keranjang'])->name('keranjangPembeli');
     Route::get('/pembeli/detailPesanan', [PembeliController::class, 'detailPesanan'])->name('detailPesanan');
     Route::get('/pembeli/pesanan', [PembeliController::class, 'pesanan'])->name('pesanan');
