@@ -23,6 +23,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'no_telepon',
         'password',
         'role'
     ];
@@ -50,20 +51,24 @@ class User extends Authenticatable
         ];
     }
 
-    public function userKePesanan(){
-        return $this->hasMany(Pesanan::class, 'user_id',  'id');
-    }
-
-    public function userKeKeranjang(){
+    
+    public function userKeKeranjang()
+    {
         return $this->hasMany(Keranjang::class, 'user_id', 'id');
     }
 
-    public function userKePermintaan_Servis(){
+    public function userKePermintaan_Servis()
+    {
         return $this->hasMany(Permintaan_Servis::class, 'user_id', 'id');
     }
-    public function userKePrifils(){
-        return $this->hasOne(Permintaan_Servis::class);
+    
+    public function profil()
+    {
+        return $this->hasOne(Profil::class, 'id_user');
     }
-
-
+    
+    public function userKePesanan()
+    {
+        return $this->hasMany(Pesanan::class, 'user_id',  'id');
+    }
 }

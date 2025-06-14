@@ -15,15 +15,27 @@ class Pesanan extends Model
         'total_harga',
         'status',
         'alamat_pengiriman',
-        'kota','kode_pos',
+        'kota',
+        'kode_pos',
         'no_telepon',
         'metode_pembayaran'
     ];
 
-    public function pesananKeUser(){
+    public function pesananKeUser()
+    {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    public function pesananKeDetailPesanan(){
-        return $this->belongsTo(DetailPesanan::class, 'pesanan_id', 'id');
+    
+    public function pesananKeDetailPesanan()
+    {
+        return $this->hasMany(DetailPesanan::class, 'pesanan_id', 'id');
+    }
+
+
+    public function produk()
+    {
+        return $this->belongsToMany(Produk::class, 'detail_pesanan', 'pesanan_id', 'produk_id')
+            ->withPivot('jumlah', 'total_harga')
+            ->withTimestamps();
     }
 }

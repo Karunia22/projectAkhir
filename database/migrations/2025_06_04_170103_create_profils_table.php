@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('profils', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            $table->string('kota')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('no_telepon')->nullable();
+            $table->string('kode_pos')->nullable();
             $table->timestamps();
         });
     }

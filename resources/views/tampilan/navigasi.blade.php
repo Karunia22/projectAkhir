@@ -23,7 +23,7 @@
                                         Category</a></li>
                                 <li class="nav-item"><a class="nav-link"
                                         href="{{-- {{ route('detailProdukPembeli') }} --}}">Product Details</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{{ route('pesanan') }}">Product
+                                {{-- <li class="nav-item"><a class="nav-link" href="{{ route('pesanan') }}">Product --}}
                                         Checkout</a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link"

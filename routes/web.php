@@ -56,12 +56,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:pembeli'])->group(function () {
     Route::get('/pembeli', [PembeliController::class, 'berandaPembeli'])->name('pembeliBeranda');
     Route::get('/pembeli/produk', [PembeliController::class, 'produk'])->name('produkPembeli');
+    Route::get('/pembeli/produk/{id}', [PembeliController::class, 'produkDariKategori'])->name('produkPembeliDariKategori');
     Route::get('/pembeli/detailProduk/{id}', [PembeliController::class, 'detailProduk'])->name('detailProdukPembeli');
     Route::get('/pembeli/keranjang', [PembeliController::class, 'keranjang'])->name('keranjangPembeli');
+    Route::post('/pembeli/isiKeranjang', [PembeliController::class, 'isiKeranjang'])->name('isiKeranjangPembeli');
     Route::get('/pembeli/detailPesanan', [PembeliController::class, 'detailPesanan'])->name('detailPesanan');
-    Route::get('/pembeli/pesanan', [PembeliController::class, 'pesanan'])->name('pesanan');
+    Route::get('/pembeli/pesanan/{id}', [PembeliController::class, 'pesanan'])->name('pesanan');
+    Route::post('/pembeli/cekout/{id}', [PembeliController::class, 'cekout'])->name('cekout');
     Route::get('/pembeli/permintaanServis', [PembeliController::class, 'permintaanServis'])->name('permintaanServis');
     Route::get('/pembeli/pembeliProfil', [PembeliController::class, 'pembeliProfil'])->name('pembeliProfil');
+    Route::post('/pembeli/tambahProfil', [PembeliController::class, 'tambahProfil'])->name('tambahProfil');
+    Route::put('/pembeli/editProfil', [PembeliController::class, 'editProfil'])->name('editProfil');
 });
 
 Route::middleware(['auth', 'role:penjual'])->group(function () {
