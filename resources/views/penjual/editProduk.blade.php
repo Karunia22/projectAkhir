@@ -1,47 +1,58 @@
 <x-penjual-layout>
-
-    <div class="row">
-        <div class="col-12 grid-margin stretch-card">
-            <div class="card">
+    <div class="row justify-content-center">
+        <div class="col-md-10 grid-margin stretch-card">
+            <div class="card shadow rounded">
                 <div class="card-body">
-                    <h4 class="card-title"></h4>
-                    <form class="forms-sample" action="{{ route('updateProdukPenjual',[$data->id]) }}" method="POST">
+                    <h4 class="card-title mb-4">Edit Data Produk</h4>
+
+                    <form class="row g-3"
+                          action="{{ route('updateProdukPenjual', [$data->id]) }}"
+                          method="POST"
+                          enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="form-group">
-                            <label for="credits">Nama produk</label>
-                            <input type="text" class="form-control" name="nama_produk" value="{{ $data->nama_produk }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="credits">Deskripsi</label>
-                            <input type="text" class="form-control" name="deskripsi" value="{{ $data->deskripsi }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="credits">Harga</label>
-                            <input type="number" class="form-control" name="harga" value="{{ $data->harga }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="credits">Stok</label>
-                            <input type="number" class="form-control" name="stok" value="{{ $data->stok }}">
-                        </div>
-                        <div class="form-group">
 
-                            <select name="kategori_id"
-                                class="form-select form-select-lg mb-4 p-3 border-2 border-primary shadow rounded-3 fw-semibold text-dark w-100"
-                                style="max-width: 600px;">
-                                <option value="" disabled selected>-- Pilih Kategori Produk --</option>
-                                @foreach ($kategori as $k)
-                                    <option value="{{ $k->id }}">{{ $k->kategori_produk }}</option>
-                                @endforeach
-                            </select>
+                        <div class="col-md-6">
+                            <label for="nama_produk" class="form-label">Nama Produk</label>
+                            <input type="text" name="nama_produk" class="form-control"
+                                   value="{{ old('nama_produk', $data->nama_produk) }}" required>
                         </div>
-                        <div class="form-group">
-                            <label for="credits">Gambar</label>
-                            <input type="file" class="form-control" name="img_url">
+
+                        <div class="col-md-6">
+                            <label for="harga" class="form-label">Harga</label>
+                            <input type="number" name="harga" class="form-control"
+                                   value="{{ old('harga', $data->harga) }}" required>
                         </div>
+
+                        <div class="col-md-12">
+                            <label for="deskripsi" class="form-label">Deskripsi</label>
+                            <textarea name="deskripsi" class="form-control" rows="3" required>{{ old('deskripsi', $data->deskripsi) }}</textarea>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="stok" class="form-label">Stok</label>
+                            <input type="number" name="stok" class="form-control"
+                                   value="{{ old('stok', $data->stok) }}" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="img_url" class="form-label">Gambar Produk</label>
+                            <input type="file" name="img_url" class="form-control">
+                        </div>
+
+                        @if ($data->img_url)
+                        <div class="col-md-12 mt-3">
+                            <label class="form-label d-block">Gambar Saat Ini:</label>
+                            <img src="{{ asset($data->img_url) }}" width="150" class="img-thumbnail shadow-sm">
+                        </div>
+                        @endif
+
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary w-100">Simpan Perubahan</button>
+                        </div>
+                    </form>
+
                 </div>
-                <button type="submit" class="btn btn-primary me-2">Edit</button>
-                </form>
             </div>
         </div>
     </div>

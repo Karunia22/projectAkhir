@@ -90,10 +90,11 @@ class PembeliController extends Controller
     {
         $user = Auth::user();
         $profil = $user->profil;
-        // $pembeli = Pesanan::with('')
         $produk = Produk::findOrFail($request->produk_id);
-
-
+        // dd($produk);
+        if ($request->jumlah > $produk->stok) {
+            return redirect()->back();
+        };
         DB::beginTransaction();
         try {
             $pesanan = Pesanan::create([
@@ -112,25 +113,57 @@ class PembeliController extends Controller
                 'produk_id' => $request->produk_id,
                 'total_harga' => $produk->harga * $request->jumlah,
             ]);
-            // dd($detail);
+
             $pesanan->total_harga = $detail->total_harga;
             $pesanan->save();
+            $produk->stok -= $request->jumlah;
+            $produk->save();
             DB::commit();
             return redirect()->route('pesanan', ['id' => $detail->id]);
+            // dd($detail);
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('detailPesanan');
+            return redirect()->back();
         }
     }
 
-    public function detailPesanan()
+    public function daftarPesanan()
     {
-        return view('pembeli.detailPesanan');
+        $pesanan = Pesanan::with('pesananKeDetailPesanan.detailPesananKeProduk')
+            ->where('user_id', auth()->id())
+            ->get();
+        // dd($pesanan);
+        return view('pembeli.daftarPesanan', compact('pesanan'));
     }
 
-    public function permintaanServis()
+    public function batalPesanan($id)
     {
-        return view('pembeli.permintaanServis');
+        $pesanan = Pesanan::findOrFail($id);
+
+        foreach ($pesanan->pesananKeDetailPesanan as $detail) {
+            $produk = $detail->detailPesananKeProduk;
+            $produk->stok += $detail->jumlah;
+            $produk->save();
+
+            $detail->delete();
+        }
+
+        $pesanan->delete();
+
+        Pesanan::destroy($id);
+        return redirect()->back()->with('success', 'Pesanan dihapus dan stok produk dikembalikan.');
+    }
+
+    public function hapusKeranjang($id)
+    {
+        Keranjang::destroy($id);
+        return redirect()->back();
+    }
+
+    public function hapusPesanan($id)
+    {
+        Pesanan::destroy($id);
+        return redirect()->back();
     }
 
     public function pembeliProfil()

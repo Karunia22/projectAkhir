@@ -23,8 +23,6 @@
                                         Category</a></li>
                                 <li class="nav-item"><a class="nav-link"
                                         href="{{-- {{ route('detailProdukPembeli') }} --}}">Product Details</a></li>
-                                {{-- <li class="nav-item"><a class="nav-link" href="{{ route('pesanan') }}">Product --}}
-                                        Checkout</a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link"
                                         href="{{ route('detailPesanan') }}">Confirmation</a>
@@ -41,7 +39,7 @@
                                 @endif
                             @endauth
                         @endif
-
+                        <li class="nav-item"><a class="nav-link" href="{{ route('daftarPesanan') }}">Pesananku</a>
                         <li class="nav-item"><a class="nav-link" href="{{ route('keranjangPembeli') }}">Keranjang</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('permintaanServis') }}">Permintaan

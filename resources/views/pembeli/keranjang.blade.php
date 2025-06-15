@@ -58,7 +58,7 @@
                                         <td style="width: 200px">
                                             <div class="card_area d-flex align-items-center">
                                                 <button class="primary-btn" href="#" style="width: 100px">Beli</button>
-                                                <button type="submit" class="primary-btn" style="width: 100px"> Hapus</button>
+                                                <a href="{{ route('hapusKeranjang',['id'=>$item->id]) }}" class="primary-btn" style="width: 100px"> Hapus</a>
                                             </div>
                                         </td>
                                     </tr>

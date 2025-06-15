@@ -48,7 +48,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/produk', [AdminController::class, 'produk'])->name('produk');
     Route::get('/admin/produk/tambahProduk', [AdminController::class, 'tambahProduk'])->name('tambahProduk');
     Route::post('/admin/produk/terimaInputProduk', [AdminController::class, 'terimaInputProduk'])->name('terimaInputProduk');
-    Route::get('/admin/produk/hapusProduk/{id}', [AdminController::class, 'hapusProduk'])->name('hapusProduk');
+    Route::delete('/admin/produk/hapusProduk/{id}', [AdminController::class, 'hapusProduk'])->name('hapusProduk');
     Route::get('/admin/produk/editProduk/{id}', [AdminController::class, 'editProduk'])->name('editProduk');
     Route::put('/admin/produk/updateProduk/{id}', [AdminController::class, 'updateProduk'])->name('updateProduk');
 });
@@ -62,19 +62,26 @@ Route::middleware(['auth', 'role:pembeli'])->group(function () {
     Route::post('/pembeli/isiKeranjang', [PembeliController::class, 'isiKeranjang'])->name('isiKeranjangPembeli');
     Route::get('/pembeli/detailPesanan', [PembeliController::class, 'detailPesanan'])->name('detailPesanan');
     Route::get('/pembeli/pesanan/{id}', [PembeliController::class, 'pesanan'])->name('pesanan');
-    Route::post('/pembeli/cekout/{id}', [PembeliController::class, 'cekout'])->name('cekout');
+    Route::get('/pembeli/daftarPesanan', [PembeliController::class, 'daftarPesanan'])->name('daftarPesanan');
+    Route::post('/pembeli/cekout', [PembeliController::class, 'cekout'])->name('cekout');
     Route::get('/pembeli/permintaanServis', [PembeliController::class, 'permintaanServis'])->name('permintaanServis');
     Route::get('/pembeli/pembeliProfil', [PembeliController::class, 'pembeliProfil'])->name('pembeliProfil');
     Route::post('/pembeli/tambahProfil', [PembeliController::class, 'tambahProfil'])->name('tambahProfil');
     Route::put('/pembeli/editProfil', [PembeliController::class, 'editProfil'])->name('editProfil');
+    Route::get('/pembeli/hapusPesanan/{id}', [PembeliController::class, 'hapusPesanan'])->name('hapusPesanan');
+    Route::get('/pembeli/batalPesanan/{id}', [PembeliController::class, 'batalPesanan'])->name('batalPesanan');
+    Route::get('/pembeli/hapusKeranjang/{id}', [PembeliController::class, 'hapusKeranjang'])->name('hapusKeranjang');
 });
 
 Route::middleware(['auth', 'role:penjual'])->group(function () {
     Route::get('/penjual', [PenjualController::class, 'berandaPenjual'])->name('penjualBeranda');
     Route::get('/penjual/produkPenjual', [PenjualController::class, 'penjualProduk'])->name( 'penjualProduk');
-    Route::get('/penjual/editPenjual/{id}', [PenjualController::class, 'editProdukPenjual'])->name( 'editProdukPenjual');
-    Route::put('/penjual/updatePenjual/{id}', [PenjualController::class, 'updateProdukPenjual'])->name( 'updateProdukPenjual');
+    Route::get('/penjual/editProdukPenjual/{id}', [PenjualController::class, 'editProdukPenjual'])->name( 'editProdukPenjual');
+    Route::put('/penjual/updateProdukPenjual/{id}', [PenjualController::class, 'updateProdukPenjual'])->name( 'updateProdukPenjual');
     Route::get('/penjual/hapusPenjual/{id}', [PenjualController::class, 'hapusProdukPenjual'])->name( 'hapusProdukPenjual');
+    Route::get('/penjual/pesananPenjual', [PenjualController::class, 'pesananPenjual'])->name( 'pesananPenjual');
+    Route::put('/pesanan/update-status/{id}', [PenjualController::class, 'updateStatus'])->name('updateStatusPesanan');
+    Route::get('/penjual/produk/riwayatTransaksi', [PenjualController::class, 'riwayatTransaksi'])->name('riwayatTransaksi');
 });
 
 require __DIR__ . '/auth.php';

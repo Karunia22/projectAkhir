@@ -8,6 +8,7 @@ use App\Models\Kategori;
 use App\Models\User;
 use App\Models\Produk;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
@@ -32,7 +33,14 @@ class AdminController extends Controller
 
     public function terimaInputKategori(Request $request)
     {
-        Kategori::create($request->all());
+        $validated = $request->validate([
+            'kategori_produk' => 'required|string|max:255',
+        ], [
+            'kategori_produk.required' => 'Kategori tidak boleh kosong.',
+            'kategori_produk.unique' => 'Kategori sudah ada.',
+        ]);
+
+        Kategori::create($validated);
         return redirect()->route('kategori');
     }
 
@@ -69,6 +77,21 @@ class AdminController extends Controller
 
     public function terimaInputPenjual(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+            'no_telepon' => 'required|regex:/^08[0-9]{8,11}$/',
+        ], [
+            'name.required' => 'Nama wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah digunakan.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 8 karakter.',
+            'no_telepon.required' => 'Nomor HP wajib diisi.',
+            'no_telepon.regex' => 'Format nomor HP tidak valid. Gunakan format 08xxxxxxxxxx.',
+        ]);
         User::create($request->all());
         return redirect()->route('penjual');
     }
@@ -81,6 +104,21 @@ class AdminController extends Controller
     }
     public function editPenjual(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+            'no_telepon' => 'required|regex:/^08[0-9]{8,11}$/',
+        ], [
+            'name.required' => 'Nama wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah digunakan.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 8 karakter.',
+            'no_telepon.required' => 'Nomor HP wajib diisi.',
+            'no_telepon.regex' => 'Format nomor HP tidak valid. Gunakan format 08xxxxxxxxxx.',
+        ]);
         $data = User::find($id);
         return view('admin.editPenjual', compact('data'));
     }
@@ -138,44 +176,48 @@ class AdminController extends Controller
 
     public function terimaInputProduk(Request $request)
     {
-    $request->validate([
-        'nama_produk' => 'required',
-        'deskripsi' => 'required',
-        'harga' => 'required|numeric',
-        'stok' => 'required|numeric',
-        'kategori_id' => 'required|exists:kategori,id',
-        'img_url' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-    ]);
+        $request->validate([
+            'nama_produk' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'harga' => 'required|numeric|min:0',
+            'stok' => 'required|integer|min:0',
+            'kategori_id' => 'required|exists:kategori,id',
+            'img_url' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
-    $gambar = $request->file('img_url');
-    $namaGambar = time() . '_' . $gambar->getClientOriginalName();
-    $gambar->move(public_path('uploads'), $namaGambar);
+        // Upload gambar
+        $gambar = $request->file('img_url');
+        $namaGambar = time() . '_' . preg_replace('/\s+/', '_', strtolower($gambar->getClientOriginalName()));
+        $gambar->move(public_path('uploads'), $namaGambar);
 
-    // Simpan ke database
-    Produk::create([
-        'nama_produk' => $request->nama_produk,
-        'deskripsi' => $request->deskripsi,
-        'harga' => $request->harga,
-        'stok' => $request->stok,
-        'kategori_id' => $request->kategori_id,
-        'img_url' => 'uploads/' . $namaGambar
-    ]);
+        // Simpan ke database
+        Produk::create([
+            'nama_produk' => $request->nama_produk,
+            'deskripsi' => $request->deskripsi,
+            'harga' => $request->harga,
+            'stok' => $request->stok,
+            'kategori_id' => $request->kategori_id,
+            'img_url' => 'uploads/' . $namaGambar,
+        ]);
 
-    return redirect()->route('produk')->with('success', 'Produk berhasil disimpan!');
+        return redirect()->route('produk')->with('success', 'Produk berhasil disimpan!');
     }
 
     public function hapusProduk(Request $request)
     {
         $data = Produk::find($request->id);
+        if ($data->img_url && File::exists(public_path($data->img_url))) {
+            File::delete(public_path($data->img_url));
+        }
         $data->delete();
         return redirect()->route('produk');
     }
-    
+
     public function editProduk(Request $request, $id)
     {
         $kategori = Kategori::all();
         $data = Produk::find($id);
-        return view('admin.editProduk', compact('data','kategori'));
+        return view('admin.editProduk', compact('data', 'kategori'));
     }
 
     public function updateProduk(Request $request, $id)

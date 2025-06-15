@@ -30,7 +30,7 @@
                             <p><b>Deskripsi:</b> {{ $pr->deskripsi }}</p>
                             <h6>Stok: {{ $pr->stok }}</h6>
                             <h3>{{ $user }}</h3>
-                            <form class="s_product_text" action="{{ route('cekout', [$pr->id]) }}" method="POST">
+                            <form class="s_product_text" action="{{ route('cekout') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="user_id" value="{{ $user }}">
                                 <input type="hidden" name="produk_id" value="{{ $pr->id }}">

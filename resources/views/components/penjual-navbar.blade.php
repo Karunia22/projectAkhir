@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">Sperpate Rider</div>
     </a>
 
     <!-- Divider -->
@@ -13,7 +13,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('penjualBeranda') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -31,16 +31,16 @@
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-target="#collapseUtilities" aria-expanded="true"
+        <a class="nav-link collapsed" href="{{ route('pesananPenjual') }}" data-target="#collapseUtilities" aria-expanded="true"
             aria-controls="collapseUtilities">
-            <span>Status Pesanan</span>
+            <span>Pesanan pelanggan</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-target="#collapseUtilities" aria-expanded="true"
+        <a class="nav-link collapsed" href="{{ route('riwayatTransaksi') }}" data-target="#collapseUtilities" aria-expanded="true"
             aria-controls="collapseUtilities">
-            <span>Riwayat Pesanan</span>
+            <span>Riwayat Transaksi</span>
         </a>
     </li>
 
