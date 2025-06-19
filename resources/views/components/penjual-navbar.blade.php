@@ -23,52 +23,24 @@
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('penjualProduk') }}" data-target="#collapseUtilities" aria-expanded="true"
-            aria-controls="collapseUtilities">
+        <a class="nav-link collapsed" href="{{ route('penjualProduk') }}" data-target="#collapseUtilities"
+            aria-expanded="true" aria-controls="collapseUtilities">
             <span>Produk</span>
         </a>
     </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('pesananPenjual') }}" data-target="#collapseUtilities" aria-expanded="true"
-            aria-controls="collapseUtilities">
+        <a class="nav-link collapsed" href="{{ route('pesananPenjual') }}" data-target="#collapseUtilities"
+            aria-expanded="true" aria-controls="collapseUtilities">
             <span>Pesanan pelanggan</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('riwayatTransaksi') }}" data-target="#collapseUtilities" aria-expanded="true"
-            aria-controls="collapseUtilities">
+        <a class="nav-link collapsed" href="{{ route('riwayatTransaksi') }}" data-target="#collapseUtilities"
+            aria-expanded="true" aria-controls="collapseUtilities">
             <span>Riwayat Transaksi</span>
-        </a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Addons
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" aria-expanded="true">
-            <span>Pages</span>
-        </a>
-    </li>
-
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <span>Charts</span></a>
-    </li>
-
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <span>Tables</span>
         </a>
     </li>
 </ul>

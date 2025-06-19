@@ -16,11 +16,28 @@
 
     <section class="cart_area">
         <div class="container">
+            @if (session('success'))
+                <div class="alert alert-warning alert-dismissible fade show fade-out" role="alert"
+                    style="font-size: 15px;">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show fade-out" role="alert"
+                    style="font-size: 15px;">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="cart_inner">
                 <div class="table-responsive">
                     <table class="table">
-                        <thead>
+                        <thead style="border-bottom: 1px solid rgb(240, 240, 240)">
                             <tr>
+                                <th scope="col"> Ceklis</th>
                                 <th scope="col">Produk</th>
                                 <th scope="col">Stok</th>
                                 <th scope="col">Jumlah</th>
@@ -30,13 +47,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($keranjang as $item)
-                                @if ($item->user_id == $user)
+                            <form action="{{ route('cekOutKeranjang') }}" method="POST">
+                                @csrf
+                                @forelse ($keranjang as $item)
                                     <tr>
+                                        <td>
+                                            <input type="checkbox" name="indexKeranjang[]" value="{{ $item->id }}">
+                                        </td>
                                         <td>
                                             <div class="media">
                                                 <div class="d-flex">
-                                                    <img src="{{ asset($item->keranjangKeProduk->img_url) }}" alt="" style="width: 100px; height: 100px;">
+                                                    <img src="{{ asset($item->keranjangKeProduk->img_url) }}" alt=""
+                                                        style="width: 100px; height: 100px;">
                                                 </div>
                                                 <div class="media-body">
                                                     <p>{{ $item->keranjangKeProduk->nama_produk }}</p>
@@ -57,17 +79,23 @@
                                         </td>
                                         <td style="width: 200px">
                                             <div class="card_area d-flex align-items-center">
-                                                <button class="primary-btn" href="#" style="width: 100px">Beli</button>
-                                                <a href="{{ route('hapusKeranjang',['id'=>$item->id]) }}" class="primary-btn" style="width: 100px"> Hapus</a>
+                                                <a href="{{ route('hapusKeranjang', ['id' => $item->id]) }}"
+                                                    class="primary-btn" style="width: 100px"> Hapus</a>
                                             </div>
                                         </td>
                                     </tr>
-                                @endif
-                            @empty
-                                <tr>
-                                    <td class="ml-3">Produk tidak ditambahkan di keranjang</td>
-                                </tr>
-                            @endforelse
+                                @empty
+                                    <tr>
+                                        <td class="ml-3" style="text-align: center">Produk tidak ditambahkan di keranjang
+                                        </td>
+                                    </tr>
+                                @endforelse
+                                <button class="primary-btn" style="width: 100px; border-radius:5px;">Beli</button>
+                                <select name="metode_pembayaran">
+                                    <option value="">Pilih metode pembayaran</option>
+                                    <option value="COD">COD</option>
+                                </select>
+                            </form>
                         </tbody>
                     </table>
                 </div>

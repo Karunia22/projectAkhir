@@ -1,14 +1,30 @@
 <x-penjual-layout>
     <div class="container-fluid py-4">
 
-        <a href="{{ route('tambahProduk') }}" class="btn btn-success mb-3">
-            Tambah Produk
-        </a>
 
         <div class="row">
             <div class="col-md-12">
                 <div class="card shadow">
                     <div class="card-body" style="font-size: 15px;">
+                        @if (session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
+
                         <h4 class="card-title mb-4">Daftar Produk</h4>
 
                         <div class="table-responsive pt-3">
@@ -36,7 +52,7 @@
                                             <td>{{ $d->produkKeKategori->kategori_produk ?? 'Tidak Ada' }}</td>
                                             <td>
                                                 @if ($d->img_url)
-                                                    <img src="{{ asset($d->img_url) }}" alt="gambar produk"
+                                                    <img src="{{ asset('uploads/' . $d->img_url) }}" alt="gambar produk"
                                                         width="60" class="rounded shadow">
                                                 @else
                                                     <span class="text-muted">Tidak ada</span>

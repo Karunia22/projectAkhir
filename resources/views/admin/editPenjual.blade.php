@@ -15,15 +15,10 @@
                             </div>
                         @endif
 
-                        @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-                        <form action="{{ route('updatePenjual', [$data->id]) }}" method="POST">
+                        <form action="{{ route('updatePenjual')}}" method="POST">
                             @csrf
                             @method('PUT')
-
+                            <input type="hidden" name="id" value="{{ $data->id }}">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama</label>
                                 <input type="text" class="form-control" name="name" value="{{ $data->name }}"
@@ -37,12 +32,18 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password (Kosongkan jika tidak diubah)</label>
+                                <label for="email" class="form-label">Nomor hp</label>
+                                <input type="text" class="form-control" name="no_telepon" value="{{ $data->no_telepon }}"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" name="password"
                                     placeholder="Isi jika ingin ubah password">
                             </div>
 
-                            <input type="hidden" name="role" value="penjual">
+                            <input type="hidden" name="role" value="{{ $data->role }}">
 
                             <div class="text-end">
                                 <button type="submit" class="btn btn-primary" style="font-size: 15px;">Edit</button>

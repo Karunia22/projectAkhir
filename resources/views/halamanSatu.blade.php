@@ -24,7 +24,7 @@
                         <div class="row single-slide">
                             <div class="col-lg-5">
                                 <div class="banner-content">
-                                    <h1>Spertpate Rider Solusi Kebutuhan Motor Anda!</h1>
+                                    <h1>Selamat datang di Spertpate Rider Solusi Kebutuhan Motor Anda!</h1>
                                     <p>Kami adalah toko perlengkapan motor yang menyediakan berbagai produk berkualitas
                                         untuk menunjang kenyamanan dan keamanan berkendara Anda.</p>
                                 </div>

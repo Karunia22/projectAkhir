@@ -1,9 +1,13 @@
 <x-admin-layout>
     <div class="container-fluid py-4">
-
         <a href="{{ route('tambahProduk') }}" class="btn btn-success mb-3">
             Tambah Produk
         </a>
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
         <div class="row">
             <div class="col-md-12">

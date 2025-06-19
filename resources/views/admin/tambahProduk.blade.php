@@ -1,4 +1,9 @@
 <x-admin-layout>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="container-fluid py-4">
         <div class="row justify-content-center">
             <div class="col-md-8 grid-margin stretch-card">

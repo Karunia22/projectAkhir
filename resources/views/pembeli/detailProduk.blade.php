@@ -17,6 +17,16 @@
     <div class="product_image_area">
         
         <div class="container">
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show fade-out" role="alert"
+                    style="font-size: 15px;">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @foreach ($produk as $pr)
                 @if ($pr->id == $id)
                     <div class="row s_product_inner">
@@ -29,10 +39,8 @@
                             <h2>Rp{{ $pr->harga }}</h2>
                             <p><b>Deskripsi:</b> {{ $pr->deskripsi }}</p>
                             <h6>Stok: {{ $pr->stok }}</h6>
-                            <h3>{{ $user }}</h3>
                             <form class="s_product_text" action="{{ route('cekout') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="user_id" value="{{ $user }}">
                                 <input type="hidden" name="produk_id" value="{{ $pr->id }}">
                                 <div class="product_count">
                                     <label for="jumlah">Jumlah:</label>
@@ -42,6 +50,10 @@
                                 </div>
                                 <div class="card_area d-flex align-items-center">
                                     <button type="submit" class="primary-btn" {{-- href="{{ route('cekout') }}" --}}>Beli</button>
+                                    <select name="metode_pembayaran">
+                                        <option value="">Pilih metode pembayaran</option>
+                                        <option value="COD">COD</option>
+                                    </select>
                                 </div>
                             </form>
                             <form class="s_product_text" action="{{ route('isiKeranjangPembeli') }}" method="POST">

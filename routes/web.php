@@ -8,7 +8,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('beranda');
+    return view('halamanSatu');
 })->name('cek');
 Route::get('/s', function () {
     return view('pembeli.beranda');
@@ -30,19 +30,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/kategori', [AdminController::class, 'kategori'])->name('kategori');
     Route::get('/admin/kategori/tambahKategori', [AdminController::class, 'tambahKategori'])->name('tambahKategori');
     Route::post('/admin/kategori/terimaInputKategori', [AdminController::class, 'terimaInputKategori'])->name('terimaInputKategori');
-    Route::get('/admin/kategori/hapusKategori/{id}', [AdminController::class, 'hapusKategori'])->name('hapusKategori');
+    Route::delete('/admin/kategori/hapusKategori', [AdminController::class, 'hapusKategori'])->name('hapusKategori');
     Route::get('/admin/kategori/editKategori/{id}', [AdminController::class, 'editKategori'])->name('editKategori');
-    Route::put('/admin/kategori/updateKategori/{id}', [AdminController::class, 'updateKategori'])->name('updateKategori');
+    Route::put('/admin/kategori/updateKategori', [AdminController::class, 'updateKategori'])->name('updateKategori');
     //penjual
     Route::get('/admin/penjual', [AdminController::class, 'penjual'])->name('penjual');
     Route::get('/admin/penjual/tambahPenjual', [AdminController::class, 'tambahPenjual'])->name('tambahPenjual');
     Route::post('/admin/penjual/terimaInputPenjual', [AdminController::class, 'terimaInputPenjual'])->name('terimaInputPenjual');
     Route::get('/admin/penjual/hapusPenjual/{id}', [AdminController::class, 'hapusPenjual'])->name('hapusPenjual');
     Route::get('/admin/penjual/editPenjual/{id}', [AdminController::class, 'editPenjual'])->name('editPenjual');
-    Route::put('/admin/penjual/updatePenjual/{id}', [AdminController::class, 'updatePenjual'])->name('updatePenjual');
+    Route::put('/admin/penjual/updatePenjual', [AdminController::class, 'updatePenjual'])->name('updatePenjual');
     //pembeli
     Route::get('/admin/pembeli', [AdminController::class, 'pembeli'])->name('pembeli');
-    Route::get('/admin/pembeli/hapusPembeli/{id}', [AdminController::class, 'hapusPembeli'])->name('hapusPembeli');
+    Route::delete('/admin/pembeli/hapusPembeli/{id}', [AdminController::class, 'hapusPembeli'])->name('hapusPembeli');
     Route::get('/adminLogout', [AdminController::class, 'destroy'])->name('adminLogout');
     //produk
     Route::get('/admin/produk', [AdminController::class, 'produk'])->name('produk');
@@ -71,6 +71,10 @@ Route::middleware(['auth', 'role:pembeli'])->group(function () {
     Route::get('/pembeli/hapusPesanan/{id}', [PembeliController::class, 'hapusPesanan'])->name('hapusPesanan');
     Route::get('/pembeli/batalPesanan/{id}', [PembeliController::class, 'batalPesanan'])->name('batalPesanan');
     Route::get('/pembeli/hapusKeranjang/{id}', [PembeliController::class, 'hapusKeranjang'])->name('hapusKeranjang');
+    Route::post('/pembeli/cekOutKeranjang/', [PembeliController::class, 'cekOutKeranjang'])->name('cekOutKeranjang');
+    Route::get('/pembeli/cekOutKeranjangPembeli/{id}', [PembeliController::class, 'cekOutKeranjangPembeli'])->name('cekOutKeranjangPembeli');
+    Route::get('/pembeli/editUser', [PembeliController::class, 'editUser'])->name('editUser');
+    Route::put('/pembeli/updateUser', [PembeliController::class, 'updateUser'])->name('updateUser');
 });
 
 Route::middleware(['auth', 'role:penjual'])->group(function () {

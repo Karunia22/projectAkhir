@@ -1,9 +1,8 @@
 <x-admin-layout>
     <div class="container-fluid py-4">
         @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert" style="font-size: 25px;">
+            <div class="alert alert-success alert-dismissible fade show fade-out" role="alert" style="font-size: 15px;">
                 {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
@@ -39,11 +38,12 @@
                                                 class="btn btn-sm btn-outline-primary" style="font-size: 25px;">
                                                 <i class="typcn typcn-edit"></i> Edit
                                             </a>
-                                            <form action="/admin/kategori/hapusKategori/{{ $d->id }}"
+                                            <form action="{{ route('hapusKategori') }}"
                                                 method="POST"
                                                 onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
                                                 @csrf
                                                 @method('DELETE')
+                                                <input type="hidden" name="id" value="{{ $d->id }}">
                                                 <button type="submit" class="btn btn-sm btn-outline-danger"
                                                     style="font-size: 25px;">
                                                     <i class="typcn typcn-delete-outline"></i> Hapus

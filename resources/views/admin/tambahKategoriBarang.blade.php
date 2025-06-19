@@ -14,7 +14,8 @@
                     @endif
 
                     @if (session('success'))
-                        <div class="alert alert-success">
+                        <div class="alert alert-success alert-dismissible fade show fade-out" role="alert"
+                            style="font-size: 15px;">
                             {{ session('success') }}
                         </div>
                     @endif

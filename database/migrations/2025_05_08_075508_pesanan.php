@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('kota');
             $table->string('kode_pos');
             $table->string('no_telepon');
-            $table->string('metode_pembayaran');
+            $table->enum('metode_pembayaran',['COD']);
             $table->timestamps();
         });
     }

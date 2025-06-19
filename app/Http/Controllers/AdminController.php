@@ -34,39 +34,51 @@ class AdminController extends Controller
     public function terimaInputKategori(Request $request)
     {
         $validated = $request->validate([
-            'kategori_produk' => 'required|string|max:255',
+            'kategori_produk' => 'required|string|max:255|unique:kategori,kategori_produk',
         ], [
             'kategori_produk.required' => 'Kategori tidak boleh kosong.',
             'kategori_produk.unique' => 'Kategori sudah ada.',
         ]);
 
         Kategori::create($validated);
-        return redirect()->route('kategori');
+        return redirect()->route('kategori')->with('success', 'Kategori Berhasil ditambahkan');
     }
 
     public function hapusKategori(Request $request)
     {
+        // dd($request->all());
         $data = Kategori::find($request->id);
         $data->delete();
-        return redirect()->route('kategori');
+        return redirect()->route('kategori')->with('success', 'Pembeli berhassil dihapus');
     }
-    public function editKategori(Request $request, $id)
+    public function editKategori($id)
     {
         $data = Kategori::find($id);
+        // dd($data);
         return view('admin.editKategori', compact('data'));
     }
 
-    public function updateKategori(Request $request, $id)
+    public function updateKategori(Request $request)
     {
-        $data = Kategori::find($id);
+        // dd($request->all());
+        $request->validate([
+            'id' => 'required|integer|exists:kategori,id',
+            'kategori_produk' => 'required|string|max:255',
+        ], [
+            'kategori_produk.required' => 'Kategori tidak boleh kosong.',
+            'kategori_produk.unique' => 'Kategori sudah ada.',
+        ]);
+
+        $data = Kategori::find($request->id);
+        // dd($data);
         $data->update($request->all());
         $data->save();
-        return redirect()->route('kategori');
+        return redirect()->route('kategori')->with('success', 'Berhasil di Edit');
     }
 
     public function penjual()
     {
-        $data = User::all();
+        $data = User::where('role', 'penjual')->get();
         return view('admin.penjual', compact('data'));
     }
 
@@ -93,18 +105,26 @@ class AdminController extends Controller
             'no_telepon.regex' => 'Format nomor HP tidak valid. Gunakan format 08xxxxxxxxxx.',
         ]);
         User::create($request->all());
-        return redirect()->route('penjual');
+        return redirect()->route('penjual')->with('success', 'Penjual berhasil ditambahkan');
     }
 
     public function hapusPenjual(Request $request)
     {
         $data = User::find($request->id);
         $data->delete();
-        return redirect()->route('penjual');
+        return redirect()->route('penjual')->with('success', 'Penjual berhasil dihapus');
     }
-    public function editPenjual(Request $request, $id)
+    public function editPenjual($id)
+    {
+        // dd($id);
+        $data = User::find($id);
+        return view('admin.editPenjual', compact('data'));
+    }
+
+    public function updatePenjual(Request $request)
     {
         $request->validate([
+            'id' => 'required|integer|exists:users,id',
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
@@ -119,21 +139,16 @@ class AdminController extends Controller
             'no_telepon.required' => 'Nomor HP wajib diisi.',
             'no_telepon.regex' => 'Format nomor HP tidak valid. Gunakan format 08xxxxxxxxxx.',
         ]);
-        $data = User::find($id);
-        return view('admin.editPenjual', compact('data'));
-    }
-
-    public function updatePenjual(Request $request, $id)
-    {
-        $data = User::find($id);
+        // dd($request->all());
+        $data = User::find($request->id);
         $data->update($request->all());
         $data->save();
-        return redirect()->route('penjual');
+        return redirect()->route('penjual')->with('success', 'Penjual berhasil diubah');
     }
 
     public function pembeli()
     {
-        $data = User::all();
+        $data = User::where('role', 'pembeli')->get();
         return view('admin.pembeli', compact('data'));
     }
 
@@ -141,7 +156,7 @@ class AdminController extends Controller
     {
         $data = User::find($request->id);
         $data->delete();
-        return redirect()->route('pembeli');
+        return redirect()->route('pembeli')->with('success', 'Pembeli Berhasil dihapus');
     }
 
     public function destroy(Request $request): RedirectResponse
@@ -210,7 +225,7 @@ class AdminController extends Controller
             File::delete(public_path($data->img_url));
         }
         $data->delete();
-        return redirect()->route('produk');
+        return redirect()->route('produk')->with('success', 'Produk berhasil hapus');
     }
 
     public function editProduk(Request $request, $id)
@@ -222,9 +237,39 @@ class AdminController extends Controller
 
     public function updateProduk(Request $request, $id)
     {
-        $data = Produk::find($id);
-        $data->update($request->all());
-        $data->save();
-        return redirect()->route('produk');
+        $request->validate([
+            'nama_produk' => 'required|string|max:100',
+            'deskripsi' => 'required|string|max:1000',
+            'harga' => 'required|integer|min:0',
+            'stok' => 'required|integer|min:0',
+            'kategori_id' => 'required|exists:kategori,id',
+            'img_url' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $produk = Produk::findOrFail($id);
+
+        // Jika ada gambar baru
+        if ($request->hasFile('img_url')) {
+            // Hapus gambar lama (jika ada)
+            if ($produk->img_url && file_exists(public_path($produk->img_url))) {
+                unlink(public_path($produk->img_url));
+            }
+
+            // Upload gambar baru
+            $gambar = $request->file('img_url');
+            $namaGambar = time() . '_' . preg_replace('/\s+/', '_', strtolower($gambar->getClientOriginalName()));
+            $gambar->move(public_path('uploads'), $namaGambar);
+            $produk->img_url = 'uploads/' . $namaGambar;
+        }
+
+        // Update kolom lain
+        $produk->nama_produk = $request->nama_produk;
+        $produk->deskripsi = $request->deskripsi;
+        $produk->harga = $request->harga;
+        $produk->stok = $request->stok;
+        $produk->kategori_id = $request->kategori_id;
+        $produk->save();
+
+        return redirect()->route('produk')->with('success', 'Produk berhasil diedit.');
     }
 }

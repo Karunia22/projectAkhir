@@ -1,21 +1,14 @@
 <x-admin-layout>
     <div class="container-fluid py-4">
-        {{-- Pesan sukses --}}
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert" style="font-size: 15px;">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
-
-        {{-- Header dan Tombol Tambah --}}
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="text-primary" style="font-size: 15px;">Manajemen Kategori Produk</h2>
-            <a href="{{ route('tambahKategori') }}" class="btn btn-primary shadow" style="font-size: 15px;">
-                <i class="typcn typcn-plus"></i> Tambah Kategori
-            </a>
-        </div>
-
         {{-- Tabel Kategori --}}
         <div class="card shadow border-0">
             <div class="card-header bg-primary text-white" style="font-size: 15px;">
@@ -32,32 +25,29 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($data as $d)
-                                <tr>
-                                    <td>{{ $d->id }}</td>
-                                    <td class="text-capitalize">{{ $d->kategori_produk }}</td>
-                                    <td>
-                                        <div class="d-flex justify-content-center gap-2 flex-wrap">
-                                            <a href="/admin/kategori/editKategori/{{ $d->id }}"
-                                                class="btn btn-outline-success" style="font-size: 15px;">
-                                                <i class="typcn typcn-edit"></i> Edit
-                                            </a>
-                                            <form action="/admin/kategori/hapusKategori/{{ $d->id }}"
-                                                method="POST" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-outline-danger" style="font-size: 15px;">
-                                                    <i class="typcn typcn-delete-outline"></i> Hapus
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="3" class="text-muted">Belum ada kategori tersedia.</td>
-                                </tr>
-                            @endforelse
+
+                            <tr>
+                                <td>{{ $data->id }}</td>
+                                <td class="text-capitalize">{{ $data->kategori_produk }}</td>
+                                <td>
+                                    <div class="d-flex justify-content-center  gap-2 flex-wrap">
+                                        <form action="{{ route('updateKategori') }}" method="POST"
+                                            onsubmit="return confirm('Yakin ingin menghapus kategori ini?')"
+                                            style="display: flex; justify-content:center; align-items: center">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="id" value="{{ $data->id }}">
+                                            <input type="text" name="kategori_produk"
+                                                class="form-control form-control-sm" placeholder="Nama kategori"
+                                                style="max-width: 150px; font-size: 14px; padding: 4px 8px;">
+                                            <button type="submit" class="btn btn-outline-danger"
+                                                style="font-size: 15px;">
+                                                <i class="typcn typcn-delete-outline"></i> Edit
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

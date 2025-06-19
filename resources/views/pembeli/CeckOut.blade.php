@@ -7,8 +7,8 @@
                 <div class="col-first">
                     <h1>Checkout</h1>
                     <nav class="d-flex align-items-center">
-                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                        <a href="single-product.html">Buat Pesanan</a>
+                        <a href="{{ url('/') }}">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="#">Buat Pesanan</a>
                     </nav>
                 </div>
             </div>
@@ -36,31 +36,34 @@
                             <p><strong>No. Telepon:</strong> {{ $pesanan->no_telepon }}</p>
                         </div>
                     </div>
+
                     <div class="col-lg-4">
                         <div class="order_box">
                             <h2>Pesanan Anda</h2>
                             <div class="card-body">
                                 @php
-                                    $detail = $pesanan->pesananKeDetailPesanan->first();
-                                    $produk = $detail->detailPesananKeProduk;
-                                    $hargaSatuan = $produk->harga ?? 0;
-                                    $jumlah = $detail->jumlah;
-                                    $total = $detail->total_harga;
-                                    $grandTotal = $total;
+                                    $grandTotal = 0;
                                 @endphp
+
                                 <ul class="list">
                                     <li><a href="#">Produk <span>Total</span></a></li>
-                                    <li>
-                                        <a href="#">{{ $produk->nama_produk ?? 'Produk Tidak Ditemukan' }}
-                                            <span class="middle">x {{ $jumlah }}</span>
-                                            <span class="last">Rp{{ number_format($total) }}</span>
-                                        </a>
-                                    </li>
+                                    @foreach ($pesanan->pesananKeDetailPesanan as $detail)
+                                        @php
+                                            $produk = $detail->detailPesananKeProduk;
+                                            $total = $detail->total_harga;
+                                            $grandTotal += $total;
+                                        @endphp
+                                        <li>
+                                            <a href="#">
+                                                {{ $produk->nama_produk ?? 'Produk Tidak Ditemukan' }}
+                                                <span class="middle">x {{ $detail->jumlah }}</span>
+                                                <span class="last">Rp{{ number_format($total) }}</span>
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
-
                                 <ul class="list list_2">
-                                    <li><a href="#">Subtotal <span>Rp{{ number_format($total) }}</span></a></li>
-                                    </li>
+                                    <li><a href="#">Subtotal <span>Rp{{ number_format($grandTotal) }}</span></a></li>
                                     <li><a href="#">Total <span>Rp{{ number_format($grandTotal) }}</span></a></li>
                                 </ul>
                             </div>
@@ -70,6 +73,7 @@
             </div>
         </div>
     </section>
+
     <style>
         .info-box {
             width: 100%;
